@@ -12,7 +12,6 @@ import "./Login.css";
 const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  // TODO: CRIO_TASK_MODULE_LOGIN - Fetch the API response
   /**
    * Perform the Login API call
    * @param {{ username: string, password: string }} formData
