@@ -17,8 +17,7 @@ import "./Products.css";
 
 
 const Products = () => {
-
-
+  //const userName = JSON.parse(localStorage.getItem('userData')).username;
 
 
 
@@ -27,7 +26,7 @@ const Products = () => {
   return (
     <div>
       <Header>
-
+      
       </Header>
 
        <Grid container>

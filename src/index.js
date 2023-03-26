@@ -9,17 +9,21 @@ import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
-        <SnackbarProvider
-          maxSnack={1}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          preventDuplicate
-          //variant="error"
-        >
-          <App />
-        </SnackbarProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+          <SnackbarProvider
+            maxSnack={1}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            preventDuplicate
+            //variant="error"
+          >
+            <App />
+          </SnackbarProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>,
    document.getElementById('root')
 );

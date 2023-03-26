@@ -37,7 +37,7 @@ const Register = () => {
    */
 
   const [isLoading,setIsLoading] = useState(false);
-
+  const history = useHistory(); 
   const register = async (formData) => {
      //console.log(formData)
      
@@ -58,7 +58,8 @@ const Register = () => {
           password : "",
           confirmPassword : ""
         })
-        enqueueSnackbar("Registered successfully",{ variant: 'success' })
+        enqueueSnackbar("Registered successfully",{ variant: 'success' });
+        history.push("/login");
       }
   
       catch(error){
@@ -115,7 +116,7 @@ const Register = () => {
       return false;
     }
 
-    else if(data.password != data.confirmPassword) {
+    else if(data.password !== data.confirmPassword) {
       enqueueSnackbar("Passwords do not match", {variant : 'warning'});
       return false;
     }
@@ -139,7 +140,7 @@ const Register = () => {
       justifyContent="space-between"
       minHeight="100vh"
     >
-      <Header hasHiddenAuthButtons />
+      <Header hasHiddenAuthButtons = {true} />
       <Box className="content">
         <Stack spacing={2} className="form">
           <h2 className="title">Register</h2>
@@ -177,14 +178,15 @@ const Register = () => {
             value = {userData.confirmPassword}
             onChange = {(e) => setUserData({...userData, confirmPassword : e.target.value}) }
           />
-           {isLoading ? <CircularProgress  style={{ margin : "auto",padding : "10px" }}/>:<Button onClick = {() => register(userData)}className="button" variant="contained">
+           {isLoading ? <CircularProgress  style={{ margin : "auto",padding : "10px" }}/>:<Button onClick = {() => register(userData)}/* className="button" */ variant="contained">
             Register Now
            </Button> }
           <p className="secondary-action">
             Already have an account?{" "}
-             <a className="link" href="#">
+             {/* <a className="link" href="<Login />"> */}
+             <Link to = "/login" className="link" >
               Login here
-             </a>
+             </Link>
           </p>
         </Stack>
       </Box>
