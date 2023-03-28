@@ -38,10 +38,11 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
           variant="text"
           onClick = {handleExplore}
         >Back to explore  
-        </Button> :localStorage.getItem('username') ? 
+        </Button> : <div><Stack direction="row">{children} {localStorage.getItem('username') ? 
           <Stack direction="row" spacing={2}>
+            
             <Avatar alt={localStorage.getItem('username')} src="avatar.png" />
-            <span style={{ margin : "auto", paddingLeft : "10px"}}>{localStorage.getItem('username')}</span>
+            <span className = "username-text" style = {{margin : "auto", paddingLeft: "10px"}}>{localStorage.getItem('username')}</span>
             <Button onClick = {handleLogout} className = "link">
               LOGOUT
             </Button>
@@ -52,7 +53,9 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
           </Button>
           <Button variant="contained" onClick={handleRegister}>REGISTER
           </Button>
+        </Stack>}
         </Stack>
+        </div>
       } 
         
       </Box>
