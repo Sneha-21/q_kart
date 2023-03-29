@@ -3,7 +3,6 @@ import ipConfig from "./ipConfig.json";
 import { Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Products from "./components/Products";
-//import { ThemeProvider } from "@mui/system";
 export const config = {
   endpoint: `http://${ipConfig.workspaceIp}:8082/api/v1`,
 };
