@@ -38,7 +38,7 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
           variant="text"
           onClick = {handleExplore}
         >Back to explore  
-        </Button> : <div><Stack direction="row">{children} {localStorage.getItem('username') ? 
+        </Button> : <><div>{children} </div> {localStorage.getItem('username') ? 
           <Stack direction="row" spacing={2}>
             
             <Avatar alt={localStorage.getItem('username')} src="avatar.png" />
@@ -54,8 +54,7 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
           <Button variant="contained" onClick={handleRegister}>REGISTER
           </Button>
         </Stack>}
-        </Stack>
-        </div>
+        </>
       } 
         
       </Box>

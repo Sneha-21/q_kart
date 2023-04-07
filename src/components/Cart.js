@@ -47,7 +47,26 @@ import "./Cart.css";
  *    Array of objects with complete data on products in cart
  *
  */
+
 export const generateCartItemsFrom = (cartData, productsData) => {
+  console.log(cartData)
+  console.log(productsData)
+  /* if(cartData===undefined || cartData.length===0)
+    return []; */
+
+  let cartItem = [];
+  for(let item of cartData){
+    for(let product of productsData){
+      if(item["productId"]===product["_id"]){
+        let completeCartItem = product;
+        completeCartItem["qty"] = item["qty"];
+        cartItem.push(completeCartItem);
+      }
+  }
+}
+  console.log(cartItem)
+  return cartItem;
+  
 };
 
 /**
@@ -61,12 +80,17 @@ export const generateCartItemsFrom = (cartData, productsData) => {
  *
  */
 export const getTotalCartValue = (items = []) => {
+  let totalCartPrice = 0;
+  items.forEach(item => {
+    totalCartPrice += item.cost * item.qty;
+  });
+  return totalCartPrice;
 };
 
 
 /**
  * Component to display the current quantity for a product and + and - buttons to update product quantity on cart
- * 
+ *
  * @param {Number} value
  *    Current quantity of product in cart
  * 
@@ -112,12 +136,14 @@ const ItemQuantity = ({
  * 
  * 
  */
+
 const Cart = ({
   products,
   items = [],
   handleQuantity,
+  cartData
 }) => {
-
+  const history = useHistory();
   if (!items.length) {
     return (
       <Box className="cart empty">
@@ -131,13 +157,65 @@ const Cart = ({
 
   return (
     <>
+    
       <Box className="cart">
         {/* TODO: CRIO_TASK_MODULE_CART - Display view for each cart item with non-zero quantity */}
+        
+        {items.map(item => {return (<Box display="flex" alignItems="flex-start" padding="1rem">
+          <Box className="image-container">
+            <img
+                // Add product image
+                src={item.image}
+                // Add product name as alt eext
+                alt={item.name}
+                width="100%"
+                height="100%"
+            />
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            height="6rem"
+            paddingX="1rem"
+          >
+            <div>{item.name}</div>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+            >
+              <ItemQuantity
+              // Add required props by checking implementation
+              value = {item.qty}
+
+              handleAdd = {() => handleQuantity(localStorage.getItem("token"),
+                cartData,
+                products,
+                item._id,
+                item.qty + 1,
+                false)}
+
+              handleDelete = {() => handleQuantity(localStorage.getItem("token"),
+              cartData,
+              products,
+              item._id,
+              item.qty - 1,
+              false)}
+              />
+              
+              <Box padding="0.5rem" fontWeight="700">
+                  ${item.cost}
+              </Box>
+            </Box>
+          </Box>
+        </Box>)})}
+
         <Box
           padding="1rem"
           display="flex"
-          justifyContent="space-between"
-          alignItems="center"
+          justifyContent="space-between"t
+          alignIems="center"
         >
           <Box color="#3C3C3C" alignSelf="center">
             Order total
@@ -159,7 +237,8 @@ const Cart = ({
             variant="contained"
             startIcon={<ShoppingCart />}
             className="checkout-btn"
-          >
+            onClick = {() => history.push("/checkout")}
+          > 
             Checkout
           </Button>
         </Box>
