@@ -11,19 +11,19 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-          <SnackbarProvider
-            maxSnack={1}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            preventDuplicate
-            //variant="error"
-          >
-            <App />
-          </SnackbarProvider>
+        <SnackbarProvider
+          maxSnack={1}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          preventDuplicate
+          //variant="error"
+        >
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
-   document.getElementById('root')
+  document.getElementById("root")
 );

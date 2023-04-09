@@ -11,8 +11,13 @@ import { useHistory, Link } from "react-router-dom";
 
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
-
-
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
   /**
    * Definition for register handler
    * - Function to be called when the user clicks on the register button or submits the register form
@@ -36,42 +41,42 @@ const Register = () => {
    * }
    */
 
-  const [isLoading,setIsLoading] = useState(false);
-  const history = useHistory(); 
   const register = async (formData) => {
-     //console.log(formData)
-     
-     let data = {
-      username : formData.username,
-      password : formData.password
-    }
-    
-    if(validateInput(formData)) {
-      
-      try{
+    //console.log(formData)
+
+    let data = {
+      username: formData.username,
+      password: formData.password,
+    };
+
+    if (validateInput(formData)) {
+      try {
         //<CircularProgress />
         setIsLoading(true);
-        let response = await axios.post(`${config.endpoint}/auth/register`, data);
+        let response = await axios.post(
+          `${config.endpoint}/auth/register`,
+          data
+        );
         setIsLoading(false);
         setUserData({
-          username : "",
-          password : "",
-          confirmPassword : ""
-        })
-        enqueueSnackbar("Registered successfully",{ variant: 'success' });
+          username: "",
+          password: "",
+          confirmPassword: "",
+        });
+        enqueueSnackbar("Registered successfully", { variant: "success" });
         history.push("/login");
-      }
-  
-      catch(error){
+      } catch (error) {
         setIsLoading(false);
-        if(error.response.status === 400) {
+        if (error.response.status === 400) {
           //console.log(error.response)
           console.log(error.response.data.message);
-          enqueueSnackbar(error.response.data.message,{ variant: 'error' });
-        }
-        else  {
-         //console.log("Something went wrong")
-          enqueueSnackbar("Something went wrong. Check that the backend is running, reachable and returns valid JSON.",{ variant: 'error' });
+          enqueueSnackbar(error.response.data.message, { variant: "error" });
+        } else {
+          //console.log("Something went wrong")
+          enqueueSnackbar(
+            "Something went wrong. Check that the backend is running, reachable and returns valid JSON.",
+            { variant: "error" }
+          );
         }
       }
     }
@@ -96,42 +101,29 @@ const Register = () => {
    * -    Check that confirmPassword field has the same value as password field - Passwords do not match
    */
   const validateInput = (data) => {
-    if(data.username === "") {
-      enqueueSnackbar("Username is a required field", {variant : 'warning'});
+    if (data.username === "") {
+      enqueueSnackbar("Username is a required field", { variant: "warning" });
       return false;
-    }
-
-    else if(data.username.length < 6) {
-      enqueueSnackbar("Username must be at least 6 characters", {variant : 'warning'});
+    } else if (data.username.length < 6) {
+      enqueueSnackbar("Username must be at least 6 characters", {
+        variant: "warning",
+      });
       return false;
-    }
-
-    else if(data.password === "") {
-      enqueueSnackbar("Password is a required field", {variant : 'warning'});
+    } else if (data.password === "") {
+      enqueueSnackbar("Password is a required field", { variant: "warning" });
       return false;
-    }
-
-    else if(data.password.length < 6) {
-      enqueueSnackbar("Password must be at least 6 characters", {variant : 'warning'});
+    } else if (data.password.length < 6) {
+      enqueueSnackbar("Password must be at least 6 characters", {
+        variant: "warning",
+      });
       return false;
-    }
-
-    else if(data.password !== data.confirmPassword) {
-      enqueueSnackbar("Passwords do not match", {variant : 'warning'});
+    } else if (data.password !== data.confirmPassword) {
+      enqueueSnackbar("Passwords do not match", { variant: "warning" });
       return false;
-    }
-
-    else {
+    } else {
       return true;
     }
-
   };
-  
-  const [userData, setUserData] = useState({
-    username : "",
-    password : "",
-    confirmPassword : ""
-  })
 
   return (
     <Box
@@ -140,7 +132,7 @@ const Register = () => {
       justifyContent="space-between"
       minHeight="100vh"
     >
-      <Header hasHiddenAuthButtons = {true} />
+      <Header hasHiddenAuthButtons={true} />
       <Box className="content">
         <Stack spacing={2} className="form">
           <h2 className="title">Register</h2>
@@ -152,9 +144,10 @@ const Register = () => {
             name="username"
             placeholder="Enter Username"
             fullWidth
-            value = {userData.username}
-            onChange = {(e) => setUserData({...userData, username : e.target.value}) }
-            
+            value={userData.username}
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
           />
           <TextField
             id="password"
@@ -165,8 +158,10 @@ const Register = () => {
             helperText="Password must be atleast 6 characters length"
             fullWidth
             placeholder="Enter a password with minimum 6 characters"
-            value = {userData.password}
-            onChange = {(e) => setUserData({...userData, password : e.target.value}) }
+            value={userData.password}
+            onChange={(e) =>
+              setUserData({ ...userData, password: e.target.value })
+            }
           />
           <TextField
             id="confirmPassword"
@@ -175,18 +170,27 @@ const Register = () => {
             name="confirmPassword"
             type="password"
             fullWidth
-            value = {userData.confirmPassword}
-            onChange = {(e) => setUserData({...userData, confirmPassword : e.target.value}) }
+            value={userData.confirmPassword}
+            onChange={(e) =>
+              setUserData({ ...userData, confirmPassword: e.target.value })
+            }
           />
-           {isLoading ? <CircularProgress  style={{ margin : "auto",padding : "10px" }}/>:<Button onClick = {() => register(userData)}/* className="button" */ variant="contained">
-            Register Now
-           </Button> }
+          {isLoading ? (
+            <CircularProgress style={{ margin: "auto", padding: "10px" }} />
+          ) : (
+            <Button
+              onClick={() => register(userData)}
+              /* className="button" */ variant="contained"
+            >
+              Register Now
+            </Button>
+          )}
           <p className="secondary-action">
             Already have an account?{" "}
-             {/* <a className="link" href="<Login />"> */}
-             <Link to = "/login" className="link" >
+            {/* <a className="link" href="<Login />"> */}
+            <Link to="/login" className="link">
               Login here
-             </Link>
+            </Link>
           </p>
         </Stack>
       </Box>
