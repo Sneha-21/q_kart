@@ -502,8 +502,8 @@ const Checkout = () => {
         history.push("/login");
       } */
       if (!(await getAddresses(token))) {
-        enqueueSnackbar("You must be logged in to access checkout page");
-        history.push("/login");
+        enqueueSnackbar("You must be logged in to access checkout page", {variant : 'warning'});
+        history.push("/");
       } else {
         console.log(addresses);
       }
