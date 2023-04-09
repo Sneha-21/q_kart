@@ -461,6 +461,7 @@ const Checkout = () => {
       );
       console.log(localStorage.getItem("balance"));
       enqueueSnackbar("Order placed successfully", { variant: "success" });
+      history.push("/thanks");
       console.log(response.data);
       return true;
     } catch (e) {
@@ -502,7 +503,9 @@ const Checkout = () => {
         history.push("/login");
       } */
       if (!(await getAddresses(token))) {
-        enqueueSnackbar("You must be logged in to access checkout page", {variant : 'warning'});
+        enqueueSnackbar("You must be logged in to access checkout page", {
+          variant: "warning",
+        });
         history.push("/");
       } else {
         console.log(addresses);
@@ -609,8 +612,7 @@ const Checkout = () => {
               variant="contained"
               onClick={() => {
                 validateRequest(items, addresses) &&
-                  performCheckout(token, items, addresses) &&
-                  history.push("/thanks");
+                  performCheckout(token, items, addresses);
               }}
             >
               PLACE ORDER
