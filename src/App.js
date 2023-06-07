@@ -5,8 +5,9 @@ import Login from "./components/Login";
 import Products from "./components/Products";
 import Checkout from "./components/Checkout";
 import Thanks from "./components/Thanks";
+import Payment from "./components/Payment";
 export const config = {
-  endpoint: `https://qkart-frontend-module.onrender.com/api/v1`,
+  endpoint: `http://3.108.39.242:8082/api/v1`,
 };
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/thanks">
           <Thanks />
+        </Route>
+        <Route path="/Payment">
+          <Payment />
         </Route>
       </Switch>
     </div>

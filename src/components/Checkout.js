@@ -460,8 +460,8 @@ const Checkout = () => {
         localStorage.getItem("balance") - getTotalCartValue(items)
       );
       console.log(localStorage.getItem("balance"));
-      enqueueSnackbar("Order placed successfully", { variant: "success" });
-      history.push("/thanks");
+      //enqueueSnackbar("Order placed successfully", { variant: "success" });
+      history.push("/Payment");
       console.log(response.data);
       return true;
     } catch (e) {
